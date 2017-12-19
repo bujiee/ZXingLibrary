@@ -179,8 +179,17 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
         viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
         cameraManager = new CameraManager(getApplication(), viewfinderView);
         lightSensor.setChangeListener(this);//默认设置数据
-        cameraManager.setManualFramingRect(ViewfinderView.dip2px(this.getBaseContext(), 200),
-                ViewfinderView.dip2px(this.getBaseContext(), 180));//todo 设置预览的宽高
+        if (getIntent() != null) {
+            Intent intent = getIntent();
+            if (intent.getBooleanExtra(QRCodeIntent.SET_RESULT, false)) {
+
+            }
+            cameraManager.setManualFramingRect(ViewfinderView.dip2px(this.getBaseContext(), intent.getIntExtra(QRCodeIntent.FRAME_WIDTH, 200)),
+                    ViewfinderView.dip2px(this.getBaseContext(), intent.getIntExtra(QRCodeIntent.FRAME_HEIGHT, 180)));
+        } else {
+            cameraManager.setManualFramingRect(ViewfinderView.dip2px(this.getBaseContext(), 200),
+                    ViewfinderView.dip2px(this.getBaseContext(), 180));
+        }
         if (cameraManager != null) {
             viewfinderView.setCameraManager(cameraManager);
         }
@@ -564,7 +573,15 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
             resultHandler.handleButtonPress(resultHandler.getDefaultButtonID());
             return;
         }
-
+        if (getIntent() != null) {
+            if (getIntent().getBooleanExtra(QRCodeIntent.SET_RESULT, false)) {
+                Intent intent = new Intent();
+                intent.putExtra(QRCodeIntent.SCAN_RESULT, rawResult != null ? rawResult.getText() : "");
+                setResult(RESULT_OK, intent);
+                finish();
+                return;
+            }
+        }
         statusView.setVisibility(View.GONE);
         viewfinderView.setVisibility(View.GONE);
         resultView.setVisibility(View.VISIBLE);

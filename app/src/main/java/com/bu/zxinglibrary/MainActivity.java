@@ -8,10 +8,12 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Toast;
 
 import com.bj.qrcodelibrary.CaptureActivity;
+import com.bj.qrcodelibrary.QRCodeIntent;
 import com.bu.zxinglibrary.util.ToastUtil;
 
 public class MainActivity extends AppCompatActivity {
@@ -61,7 +63,15 @@ public class MainActivity extends AppCompatActivity {
         }
         if (flag) {
             Intent intent = new Intent(this, activity);
-            startActivity(intent);
+            if (jumpCode == 0) {
+                //预览框的宽高
+                intent.putExtra(QRCodeIntent.FRAME_WIDTH, 200);
+                intent.putExtra(QRCodeIntent.FRAME_HEIGHT, 180);
+                intent.putExtra(QRCodeIntent.SET_RESULT, true);
+                startActivityForResult(intent, 10);
+            } else {
+                startActivity(intent);
+            }
         }
     }
 
@@ -97,6 +107,17 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
             } else {
                 ToastUtil.showToast(this, "您已禁止所需要权限，需要重新开启");
+            }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (REQUEST_CODE == requestCode) {
+            //接收返回值
+            if (data != null && !TextUtils.isEmpty(data.getStringExtra(QRCodeIntent.SCAN_RESULT))) {
+                ToastUtil.showToast(this, data.getStringExtra(QRCodeIntent.SCAN_RESULT));
             }
         }
     }

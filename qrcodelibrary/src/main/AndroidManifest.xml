@@ -3,13 +3,13 @@
     package="com.bj.qrcodelibrary">
 
     <application>
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
         <activity
             android:name=".CaptureActivity"
             android:clearTaskOnLaunch="true"
             android:screenOrientation="portrait"
             android:stateNotNeeded="true"
-            android:theme="@style/CaptureTheme"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>
                 <action android:name="com.google.zxing.client.android.SCAN" />
