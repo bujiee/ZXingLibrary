@@ -2,7 +2,7 @@
 
 @(zxing  )[	QRCode]
 
-**Android**项目开发中经常会用到二维码扫描,例如登陆、支付等谷歌方面已经有了一个开源（https://github.com/zxing/zxing）,里面的内容还是比较多的，如果想深入学习这方面的内容，还是不错的。当然了还是要根据实际需求去选择，所以我们就选择类库中的核心Jar包就行了（地址：https://github.com/ASCN-BJ/ZhaoYun/blob/master/qrcodelibrary/libs/core-3.3.1.jar）。
+**Android**项目开发中经常会用到二维码扫描,例如登陆、支付等谷歌方面已经有了一个开源（https://github.com/zxing/zxing),里面的内容还是比较多的，如果想深入学习这方面的内容，还是不错的。当然了还是要根据实际需求去选择，所以我们就选择类库中的核心Jar包就行了（地址：https://github.com/ASCN-BJ/ZhaoYun/blob/master/qrcodelibrary/libs/core-3.3.1.jar）。
 **Google zxing**中的原装的类库有一个问题就是竖屏的时候会导致无法识别，原因是竖屏的时候没有对相机的预览效果进行处理，所以在项目中，进行了处理，使得竖屏的时候的识别能够成功。所以正好看了一下，就当学习了。
 
 - **二维码扫描** ：识别二维码
