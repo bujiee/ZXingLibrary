@@ -32,7 +32,10 @@
   intent.putExtra(QRCodeIntent.SET_RESULT, true);
   startActivityForResult(intent, 10);
 ```
-![](https://github.com/ASCN-BJ/ZXingLibrary/blob/master/pic1.jpg){:height="50%" width="50%"}
+![](https://github.com/ASCN-BJ/ZXingLibrary/blob/master/pic1.jpg)
+```
+<img src="https://github.com/ASCN-BJ/ZXingLibrary/blob/master/pic1.jpg" style="max-width: 100%; background-color: rgb(204, 232, 207);">
+```
 ## 二维码生成
 ![enter image description here](https://github.com/ASCN-BJ/ZXingLibrary/blob/master/pic2.png)
 ## 二维码识别本地图片
