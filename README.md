@@ -23,8 +23,8 @@
 
 ## 二维码扫描
 ```
-//开启方式
- Intent intent = new Intent(this, activity);
+  //开启方式
+  Intent intent = new Intent(this, activity);
   //预览框的宽高
   intent.putExtra(QRCodeIntent.FRAME_WIDTH, 200);
   intent.putExtra(QRCodeIntent.FRAME_HEIGHT, 180);
@@ -32,7 +32,7 @@
   intent.putExtra(QRCodeIntent.SET_RESULT, true);
   startActivityForResult(intent, 10);
 ```
-![](https://github.com/ASCN-BJ/ZXingLibrary/blob/master/pic1.jpg)
+![](https://github.com/ASCN-BJ/ZXingLibrary/blob/master/pic1.jpg =100x100)
 ## 二维码生成
 ![enter image description here](https://github.com/ASCN-BJ/ZXingLibrary/blob/master/pic2.png)
 ## 二维码识别本地图片
