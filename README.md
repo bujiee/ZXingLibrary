@@ -26,7 +26,7 @@
 qrcodelibrary->drawable-xhdpi->flashlight_off/flashlight_on
 ```
 
-#### 混淆:如果想混淆,直接不混淆给类库即可
+#### 混淆:如果想混淆,直接不混淆该类库即可
 ```
 -keep class com.bj.qrcodelibrary.** { *;}
 ```
