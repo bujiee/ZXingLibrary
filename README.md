@@ -36,7 +36,7 @@ qrcodelibrary->drawable-xhdpi->flashlight_off/flashlight_on
 intent.putExtra(QRCodeIntent.FLASHLIGHT_BUTTON, false);
 ```
 
-#### 闪光灯感应值:默认50一下出现图标,如果项修改该值
+#### 闪光灯感应值:默认50一下出现图标,如果想修改该值
 ```
 intent.putExtra(QRCodeIntent.FLASHLIGHT_NUM, 50);
 ```
@@ -59,11 +59,15 @@ intent.putExtra(QRCodeIntent.FRAME_HEIGHT, 180)
 intent.putExtra(QRCodeIntent.SET_RESULT, true)
 startActivityForResult(intent, 10)
  ```
+ 
 ![](https://github.com/ASCN-BJ/ZXingLibrary/blob/master/pic1.jpg)
+
 ## 二维码生成
 ![enter image description here](https://github.com/ASCN-BJ/ZXingLibrary/blob/master/pic2.png)
+
 ## 二维码识别本地图片
 ![enter image description here](https://github.com/ASCN-BJ/ZXingLibrary/blob/master/pic3.png)
+
 ## 反馈与建议
 - 邮箱：<bj_email@yeah.net>
 

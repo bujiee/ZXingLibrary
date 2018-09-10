@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">QRCodeLibrary</string>
+    <string name="zxing_app_name">QRCodeLibrary</string>
     <string name="app_picker_name">Applications</string>
     <string name="bookmark_picker_name">Bookmarks</string>
     <string name="button_add_calendar">Add to calendar</string>

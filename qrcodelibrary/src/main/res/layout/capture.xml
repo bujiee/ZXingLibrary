@@ -18,15 +18,16 @@
 
     <SurfaceView
         android:id="@+id/preview_view"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <com.bj.qrcodelibrary.ViewfinderView
         android:id="@+id/viewfinder_view"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <CheckBox
+        android:visibility="gone"
         android:button="@null"
         android:background="@drawable/btn_press"
         android:id="@+id/cb_flashlight"
@@ -37,16 +38,16 @@
 
     <LinearLayout
         android:id="@+id/result_view"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:background="@color/result_view"
         android:baselineAligned="false"
         android:orientation="vertical"
         android:visibility="gone">
 
         <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="horizontal"
@@ -54,9 +55,10 @@
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
+                android:layout_height="match_parent"
                 android:gravity="right|center_vertical"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                tools:ignore="RtlHardcoded">
 
                 <ImageView
                     android:id="@+id/barcode_image_view"
@@ -194,7 +196,7 @@
 
         <LinearLayout
             android:id="@+id/result_button_view"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal">

@@ -47,7 +47,11 @@ public class PictureIdentificationActivity extends AppCompatActivity {
                 String path = ImageUtil.getImageAbsolutePath(this, uri);
                 Bitmap bitmap = Util.getBitmp(path);
                 iv_image.setImageBitmap(bitmap);
-                tv_result.setText(TextUtils.isEmpty(Util.getResult(bitmap)) ? "未发现可识别信息" : Util.getResult(bitmap));
+                if (bitmap != null) {
+                    tv_result.setText(TextUtils.isEmpty(Util.getResult(bitmap)) ? "未发现可识别信息" : Util.getResult(bitmap));
+                } else {
+                    throw new IllegalArgumentException("bitmap 为null");
+                }
             }
         }
     }

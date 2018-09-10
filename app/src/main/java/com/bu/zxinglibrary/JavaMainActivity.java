@@ -16,7 +16,7 @@ import com.bj.qrcodelibrary.CaptureActivity;
 import com.bj.qrcodelibrary.QRCodeIntent;
 import com.bu.zxinglibrary.util.ToastUtil;
 
-public class MainActivity extends AppCompatActivity {
+public class JavaMainActivity extends AppCompatActivity {
     private final int REQUEST_CODE = 10;
     private int jumpCode = -1;
 
@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra(QRCodeIntent.FRAME_WIDTH, 200);
                 intent.putExtra(QRCodeIntent.FRAME_HEIGHT, 180);
                 intent.putExtra(QRCodeIntent.SET_RESULT, true);
+                intent.putExtra(QRCodeIntent.FLASHLIGHT_BUTTON, false);
                 startActivityForResult(intent, 10);
             } else {
                 startActivity(intent);

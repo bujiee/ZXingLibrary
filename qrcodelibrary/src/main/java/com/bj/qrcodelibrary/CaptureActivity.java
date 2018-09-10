@@ -65,6 +65,7 @@ import com.bj.qrcodelibrary.result.ResultButtonListener;
 import com.bj.qrcodelibrary.result.ResultHandler;
 import com.bj.qrcodelibrary.result.ResultHandlerFactory;
 import com.bj.qrcodelibrary.result.supplement.SupplementalInfoRetriever;
+import com.bj.qrcodelibrary.sensor.FlashLightHelper;
 import com.bj.qrcodelibrary.share.ShareActivity;
 import com.bj.qrcodelibrary.util.LightSensor;
 import com.bj.qrcodelibrary.util.SensorUtil;
@@ -92,7 +93,7 @@ import java.util.Map;
  * @author dswitkin@google.com (Daniel Switkin)
  * @author Sean Owen
  */
-public final class CaptureActivity extends Activity implements SurfaceHolder.Callback, LightSensor.ChangeListener, CompoundButton.OnCheckedChangeListener {
+public final class CaptureActivity extends Activity implements SurfaceHolder.Callback, LightSensor.ChangeListener {
 
     private static final String TAG = CaptureActivity.class.getSimpleName();
 
@@ -130,6 +131,9 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     private AmbientLightManager ambientLightManager;
     private LightSensor lightSensor;
     private CheckBox cb_flashlight;
+    private FlashLightHelper mFlashLightHelper;
+    private boolean flashlightButton = true;
+    private int defaultFlashlightValue = 50;
 
     ViewfinderView getViewfinderView() {
         return viewfinderView;
@@ -146,6 +150,10 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
+        if (getIntent() != null) {
+            flashlightButton = getIntent().getBooleanExtra(QRCodeIntent.FLASHLIGHT_BUTTON, true);
+            defaultFlashlightValue = getIntent().getIntExtra(QRCodeIntent.FLASHLIGHT_NUM, 50);
+        }
         myOrientationDetector = new MyOrientationDetector(this);
         myOrientationDetector.setLastOrientation(getWindowManager().getDefaultDisplay().getRotation());
 
@@ -161,7 +169,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
         lightSensor = new LightSensor(this.getBaseContext());
         cb_flashlight = findViewById(R.id.cb_flashlight);
-        cb_flashlight.setOnCheckedChangeListener(this);
     }
 
     @Override
@@ -194,7 +201,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
             viewfinderView.setCameraManager(cameraManager);
         }
         resultView = findViewById(R.id.result_view);
-        statusView = (TextView) findViewById(R.id.status_view);
+        statusView = findViewById(R.id.status_view);
 
         handler = null;
         lastResult = null;
@@ -296,6 +303,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
             // Install the callback and wait for surfaceCreated() to init the camera.
             surfaceHolder.addCallback(this);
         }
+
     }
 
     private int getCurrentOrientation() {
@@ -333,8 +341,9 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
 
     @Override
     protected void onPause() {
-        if (View.VISIBLE == cb_flashlight.getVisibility())
-            cb_flashlight.setChecked(false);
+        if (mFlashLightHelper != null) {
+            mFlashLightHelper.onPause();
+        }
         if (handler != null) {
             handler.quitSynchronously();
             handler = null;
@@ -350,6 +359,8 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
             surfaceHolder.removeCallback(this);
         }
         myOrientationDetector.disable();
+        //相机被释放掉之后，置空
+        myCamera = null;
         super.onPause();
     }
 
@@ -786,7 +797,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
 
     private void displayFrameworkBugMessageAndExit() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(getString(R.string.app_name));
+        builder.setTitle(getString(R.string.zxing_app_name));
         builder.setMessage(getString(R.string.msg_camera_framework_bug));
         builder.setPositiveButton(R.string.button_ok, new FinishListener(this));
         builder.setOnCancelListener(new FinishListener(this));
@@ -813,51 +824,28 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     }
 
     MyOrientationDetector myOrientationDetector;
+    private Camera myCamera;
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        if (event == null)
+        //不需要开启闪光灯
+        if (!flashlightButton) {
             return;
-        if (cameraManager == null)
-            return;
-        if (event.values[0] <= 50) {
-            cb_flashlight.setVisibility(View.VISIBLE);
-        } else {
-            cb_flashlight.setVisibility(View.GONE);
         }
         OpenCamera openCamera = cameraManager.getCamera();
         if (openCamera == null)
             return;
-        Camera cameraObject = openCamera.getCamera();
-        if (cameraObject == null)
-            return;
-        Camera.Parameters parameters = cameraObject.getParameters();
-        if (event.values[0] <= 50 && View.VISIBLE == cb_flashlight.getVisibility() && cb_flashlight.isChecked()) {
-            if (SensorUtil.hasFlashlight(this.getBaseContext())) {
-                if (Camera.Parameters.FLASH_MODE_OFF.equals(parameters.getFlashMode())) {
-                    parameters.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
-                }
-            }
-        } else {
-            if (SensorUtil.hasFlashlight(this.getBaseContext())) {
-                if (!Camera.Parameters.FLASH_MODE_OFF.equals(parameters.getFlashMode())) {
-                    parameters.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
-                }
-            }
+        if (myCamera == null) {
+            myCamera = openCamera.getCamera();
+            mFlashLightHelper = new FlashLightHelper(myCamera, cb_flashlight, this);
         }
-        cameraObject.setParameters(parameters);
+        if (mFlashLightHelper != null) {
+            mFlashLightHelper.register(event, defaultFlashlightValue);
+        }
     }
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
-    }
-
-    @Override
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        if (isChecked) {
-
-        }
 
     }
 
