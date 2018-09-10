@@ -21,17 +21,44 @@
 > 2.手势识别，双击放大、缩小，根据手指移动放大、缩小
 > 3.根据环境的量暗程度显示手电筒*（手电筒的图标实在难看ε=(´ο｀*)))）
 
+## 手电筒图标:如果想修改手电筒图标,替换该目录下的图标,或修改成自己的位置即可
+```
+qrcodelibrary->drawable-xhdpi->flashlight_off/flashlight_on
+```
+
+## 混淆:如果想混淆,直接不混淆给类库即可
+```
+-keep class com.bj.qrcodelibrary.** { *;}
+```
+
+## 闪光灯:默认可以使用闪光灯,如果不想使用采用该方式修改
+```
+intent.putExtra(QRCodeIntent.FLASHLIGHT_BUTTON, false);
+```
+
+## 闪光灯感应值:默认50一下出现图标,如果项修改该值
+```
+intent.putExtra(QRCodeIntent.FLASHLIGHT_NUM, 50);
+```
+
 ## 二维码扫描
+ **Java**
 ```
-  //开启方式
-  Intent intent = new Intent(this, activity);
-  //预览框的宽高
-  intent.putExtra(QRCodeIntent.FRAME_WIDTH, 200);
-  intent.putExtra(QRCodeIntent.FRAME_HEIGHT, 180);
-  //是否返回结果
-  intent.putExtra(QRCodeIntent.SET_RESULT, true);
-  startActivityForResult(intent, 10);
-```
+ //开启方式
+ Intent intent = new Intent(this, activity); //预览框的宽高
+ intent.putExtra(QRCodeIntent.FRAME_WIDTH, 200); intent.putExtra(QRCodeIntent.FRAME_HEIGHT, 180); 
+ //是否返回结果
+ intent.putExtra(QRCodeIntent.SET_RESULT, true); startActivityForResult(intent, 10);
+ ```
+ **Kotlin**
+ ```
+val intent = Intent(this, activity)
+//预览框的宽高
+intent.putExtra(QRCodeIntent.FRAME_WIDTH, 200)
+intent.putExtra(QRCodeIntent.FRAME_HEIGHT, 180)
+intent.putExtra(QRCodeIntent.SET_RESULT, true)
+startActivityForResult(intent, 10)
+ ```
 ![](https://github.com/ASCN-BJ/ZXingLibrary/blob/master/pic1.jpg)
 ## 二维码生成
 ![enter image description here](https://github.com/ASCN-BJ/ZXingLibrary/blob/master/pic2.png)
