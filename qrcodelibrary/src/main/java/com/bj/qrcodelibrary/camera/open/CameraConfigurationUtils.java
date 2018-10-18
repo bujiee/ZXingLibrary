@@ -290,7 +290,8 @@ public final class CameraConfigurationUtils {
       Log.i(TAG, "Supported preview sizes: " + previewSizesString);
     }
 
-    double screenAspectRatio = screenResolution.x / (double) screenResolution.y;
+//    double screenAspectRatio = screenResolution.x / (double) screenResolution.y;
+    double screenAspectRatio = screenResolution.y / (double) screenResolution.x;
 
     // Find a suitable size, with max resolution
     int maxResolution = 0;
