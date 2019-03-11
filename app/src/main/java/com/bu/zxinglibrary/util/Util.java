@@ -41,13 +41,16 @@ import static android.content.Context.WINDOW_SERVICE;
 
 public class Util {
     /**
-     * 获取分辨率
+     * 获取手机的屏幕分辨率 eg:1080*1920
      *
      * @param context context
      * @return Point
      */
     public static Point setDisplay(Context context) {
         WindowManager manager = (WindowManager) context.getSystemService(WINDOW_SERVICE);
+        if (manager == null) {
+            return null;
+        }
         Display display = manager.getDefaultDisplay();
         Point displaySize = new Point();
         display.getSize(displaySize);
@@ -59,9 +62,9 @@ public class Util {
     /**
      * 获取压缩过的图片
      *
-     * @return
+     * @return Bitmap
      */
-    public static Bitmap getBitmp(String path) {
+    public static Bitmap getBitmap(String path) {
         BitmapFactory.Options options = new BitmapFactory.Options();
         //先算出测量bitmap大小
         options.inJustDecodeBounds = true;
@@ -79,10 +82,10 @@ public class Util {
     }
 
     /**
-     * 获取结果
+     * 获取bitmap中的二维码文字
      *
      * @param bitmap 需要解析的bitmap
-     * @return
+     * @return String
      */
     public static String getResult(Bitmap bitmap) {
         //Zxing自带的解析类

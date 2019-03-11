@@ -29,8 +29,8 @@ public class ImageUtil {
     /**
      * 根据Uri获取图片绝对路径，解决Android4.4以上版本Uri转换
      *
-     * @param context
-     * @param imageUri
+     * @param context  上下文
+     * @param imageUri 图片路径的绝对地址
      */
     @TargetApi(19)
     public static String getImageAbsolutePath(Context context, Uri imageUri) {
