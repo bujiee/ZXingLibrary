@@ -15,6 +15,7 @@ import com.bu.zxinglibrary.util.Util;
 
 /**
  * 识别相册中的二维码图片
+ *
  */
 public class PictureIdentificationActivity extends AppCompatActivity {
     private ImageView iv_image;
